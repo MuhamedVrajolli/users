@@ -1,0 +1,48 @@
+version: "2.3"
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    ports:
+      - "5444:5432"
+    volumes:
+      - postgres:/var/lib/postgresql
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123456
+    restart: always
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin
+    ports:
+      - "8854:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: muhamed.s.vrajolli@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: q5sH6d7XpNaeuGAD
+    restart: always
+
+  users:
+    image: users:latest
+    container_name: users
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: test
+    restart: always
+
+volumes:
+  postgres:
+    external: true
+  postgres-data:
+    external: true
+  rb-data:
+    external: true
+  rb-log:
+    external: true
+
+networks:
+  default:
+      name: ucx
